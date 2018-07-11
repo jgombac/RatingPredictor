@@ -18,7 +18,7 @@ def run_configs(data_dir, reviews_filename):
             "beta1": 0.9,
             "beta2": 0.998,
             "epsilon": 1e-08,
-            "epochs": 3000,
+            "epochs": 6000,
             "test_size": 0.2,
             "dropout": 0.25,
             "n_inputs": 224,
@@ -26,19 +26,19 @@ def run_configs(data_dir, reviews_filename):
             "n_classes": 5,
             "activation": tf.nn.relu
         },
-        "c2": {
-            "learning_rate": 0.01,
-            "beta1": 0.9,
-            "beta2": 0.998,
-            "epsilon": 1e-08,
-            "epochs": 2000,
-            "test_size": 0.2,
-            "dropout": 0.3,
-            "n_inputs": 224,
-            "hidden_units": [224, 112],
-            "n_classes": 5,
-            "activation": tf.nn.relu
-        },
+        # "c2": {
+        #     "learning_rate": 0.01,
+        #     "beta1": 0.9,
+        #     "beta2": 0.998,
+        #     "epsilon": 1e-08,
+        #     "epochs": 2000,
+        #     "test_size": 0.2,
+        #     "dropout": 0.3,
+        #     "n_inputs": 224,
+        #     "hidden_units": [224, 112],
+        #     "n_classes": 5,
+        #     "activation": tf.nn.relu
+        # },
     }
 
     train_y = np.load(data_dir + reviews_filename + "_ratings.npy")
