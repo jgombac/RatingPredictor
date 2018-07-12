@@ -15,7 +15,6 @@ def train_doc2vec(model_dir, train_file, train_params):
     window = train_params["window"]
     min_count = train_params["min_count"]
     workers = multiprocessing.cpu_count()
-
     epochs = train_params["epochs"]
     alpha = train_params["alpha"]
     min_alpha = train_params["min_alpha"]
@@ -23,6 +22,7 @@ def train_doc2vec(model_dir, train_file, train_params):
     model = doc2vec.Doc2Vec(
         documents,
         vector_size=size,
+        dm=1,
         window=window,
         min_count=min_count,
         workers=workers,

@@ -32,6 +32,14 @@ def run_configs(data_dir, reviews_filename):
             "alpha": 0.05,
             "min_alpha": 1e-4
         },
+        "t3": {
+            "size": 264,
+            "window": 2,
+            "min_count": 20,
+            "epochs": 60,
+            "alpha": 0.05,
+            "min_alpha": 1e-4
+        },
     }
 
     # iterate over preprocessed files
