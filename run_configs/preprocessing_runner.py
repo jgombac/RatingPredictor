@@ -16,7 +16,7 @@ def run_configs(data_dir, reviews_filename):
     # possible preprocessing steps
     preprocess_steps = {
         "reg_lemma": ["clean", "regexp_tokenize", "remove_stop_words", "lemmatize"],
-        "reg_stem": ["clean", "regexp_tokenize", "remove_stop_words", "stem"],
+        # "reg_stem": ["clean", "regexp_tokenize", "remove_stop_words", "stem"],
         # "tw_lemma": ["clean", "tweet_tokenize", "remove_stop_words", "lemmatize"],
         # "tw_stem": ["clean", "tweet_tokenize", "remove_stop_words", "stem"],
     }
