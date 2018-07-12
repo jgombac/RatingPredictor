@@ -10,7 +10,7 @@ def run_configs(data_dir, reviews_filename):
 
     preprocessed_steps = [
         "reg_lemma",
-        "reg_stem",
+        # "reg_stem",
         # "tw_lemma",
         # "tw_stem"
     ]
@@ -24,14 +24,14 @@ def run_configs(data_dir, reviews_filename):
             "alpha": 0.05,
             "min_alpha": 1e-4
         },
-        # "t2": {
-        #     "size": 320,
-        #     "window": 8,
-        #     "min_count": 2,
-        #     "epochs": 40,
-        #     "alpha": 0.02,
-        #     "min_alpha": 1e-4
-        # },
+        "t2": {
+            "size": 264,
+            "window": 4,
+            "min_count": 20,
+            "epochs": 100,
+            "alpha": 0.05,
+            "min_alpha": 1e-4
+        },
     }
 
     # iterate over preprocessed files
