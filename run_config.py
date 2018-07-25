@@ -2,6 +2,7 @@ import run_configs.parsing_runner as parsing
 import run_configs.preprocessing_runner as preprocessing
 import run_configs.doc_runner as embedding
 import run_configs.tf_runner as tf_runner
+import run_configs.rf_runner as rf_runner
 import run_configs.simple_runner as simple_runner
 import run_configs.result_runner as result_runner
 
@@ -21,6 +22,9 @@ def run(data_dir, reviews_filename):
 
     # tf training
     tf_runner.run_configs(data_dir, reviews_filename)
+
+    # rf training
+    rf_runner.run_configs(data_dir, reviews_filename)
 
     # metrics
     result_runner.run_configs(data_dir, reviews_filename)

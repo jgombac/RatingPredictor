@@ -8,7 +8,7 @@ def get_subdirectories(parent_dir):
 
 
 def remove_project_dirs(dir_list):
-    project_dirs = ["doc_models", "preprocessed_files", "simple_models", "tf_models"]
+    project_dirs = ["doc_models", "preprocessed_files", "simple_models", "tf_models", "rf_models"]
     return [dir for dir in dir_list if dir not in project_dirs]
 
 
