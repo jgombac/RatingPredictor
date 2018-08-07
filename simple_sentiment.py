@@ -32,11 +32,28 @@ def word_polarity(word):
 def document_polarity(doc):
     polarity_sum = 0.0
     num_words_accounted = 0
-    for word in doc:
-        current_polarity = word_polarity(word)
+    for i, (word1, word2) in enumerate(zip(doc)):
+        current_polarity = None
+        last_polarity = None
+
+        phrase_polarity = word_polarity(word1 + "_" + word2)
+        if phrase_polarity is not None:
+            current_polarity = phrase_polarity
+        else:
+            current_polarity = word_polarity(word1)
+
+            # if last word is not used in a phrase, try to get its polarity
+            if i == len(doc) - 1:
+                last_polarity = word_polarity(word2)
+
         if current_polarity is not None:
             polarity_sum += current_polarity
             num_words_accounted += 1
+            
+            # account polarity of the last word
+            if last_polarity is not None:
+                polarity_sum += last_polarity
+                num_words_accounted += 1
     if num_words_accounted > 0:
         return polarity_sum / num_words_accounted
     return None

@@ -10,35 +10,32 @@ def run_configs(data_dir, reviews_filename):
 
     preprocessed_steps = [
         "reg_lemma",
-        # "reg_stem",
-        # "tw_lemma",
-        # "tw_stem"
     ]
 
     train_configs = {
         "t1": {
-            "size": 224,
-            "window": 4,
-            "min_count": 10,
-            "epochs": 40,
-            "alpha": 0.05,
-            "min_alpha": 1e-4
+            "size": 100,
+            "window": 2,
+            "min_count": 5,
+            "epochs": 20,
+            "alpha": 0.1,
+            "min_alpha": 0.001
         },
         "t2": {
-            "size": 264,
-            "window": 4,
-            "min_count": 20,
-            "epochs": 100,
-            "alpha": 0.05,
-            "min_alpha": 1e-4
+            "size": 200,
+            "window": 2,
+            "min_count": 5,
+            "epochs": 20,
+            "alpha": 0.1,
+            "min_alpha": 0.001
         },
         "t3": {
-            "size": 264,
+            "size": 500,
             "window": 2,
-            "min_count": 20,
-            "epochs": 60,
-            "alpha": 0.05,
-            "min_alpha": 1e-4
+            "min_count": 5,
+            "epochs": 20,
+            "alpha": 0.1,
+            "min_alpha": 0.001
         },
     }
 

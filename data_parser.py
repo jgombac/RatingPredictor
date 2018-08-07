@@ -10,9 +10,9 @@ def to_dataframe(filename):
     with gzip.open(filename, "r") as f:
         for line in f:
             data.append(json.loads(line))
-            # if i == 1000:
-            #     break
-            # i += 1
+            if i == 1000:
+                break
+            i += 1
     return pd.DataFrame(data)
 
 

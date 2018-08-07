@@ -13,11 +13,41 @@ def run_configs(data_dir, reviews_filename):
 
     model_params = {
         "rf1": {
-            "n_estimators": 100
+            "n_estimators": 100,
+            "max_features": 1
         },
         "rf2": {
-            "n_estimators": 200
-        }
+            "n_estimators": 100,
+            "max_features": 2
+        },
+        "rf3": {
+            "n_estimators": 100,
+            "max_features": 5
+        },
+        "rf4": {
+            "n_estimators": 100,
+            "max_features": 10
+        },
+        "rf5": {
+            "n_estimators": 100,
+            "max_features": 20
+        },
+        "rf6": {
+            "n_estimators": 100,
+            "max_features": 50
+        },
+        "rf7": {
+            "n_estimators": 100,
+            "max_features": 100
+        },
+        "rf8": {
+            "n_estimators": 100,
+            "max_features": None # n_feature
+        },
+        "rf9": {
+            "n_estimators": 100,
+            "max_features": "auto" # sqrt(n_features)
+        },
     }
 
     train_y = np.load(data_dir + reviews_filename + "_ratings.npy")

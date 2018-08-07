@@ -22,7 +22,6 @@ def train_doc2vec(model_dir, train_file, train_params):
     model = doc2vec.Doc2Vec(
         documents,
         vector_size=size,
-        dm=1,
         window=window,
         min_count=min_count,
         workers=workers,

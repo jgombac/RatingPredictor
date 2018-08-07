@@ -16,7 +16,11 @@ def train(file_x, file_y, params):
 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=params.get("test_size"), random_state=1)
 
-    model = RandomForestClassifier(n_estimators=params["n_estimators"], n_jobs=-1)
+    model = RandomForestClassifier(
+        n_estimators=params["n_estimators"],
+        max_features=params["max_features"],
+        n_jobs=-1
+    )
 
     model.fit(x_train, y_train)
 
