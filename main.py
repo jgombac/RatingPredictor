@@ -8,7 +8,7 @@ def get_subdirectories(parent_dir):
 
 
 def remove_project_dirs(dir_list):
-    project_dirs = ["doc_models", "preprocessed_files", "simple_models", "tf_models", "rf_models"]
+    project_dirs = ["doc_models", "preprocessed_files", "simple_models", "tf_models", "rf_models", "electronics"]
     return [dir for dir in dir_list if dir not in project_dirs]
 
 
@@ -20,4 +20,5 @@ if __name__ == '__main__':
         raw_reviews_filenames = glob.glob(data_dir + subdir + "/*.json.gz")
         if len(raw_reviews_filenames) > 0:
             review_filename = raw_reviews_filenames[0].replace(data_dir, "").replace(".json.gz", "")
+            print("RUNNING", review_filename)
             runner.run(data_dir, review_filename)

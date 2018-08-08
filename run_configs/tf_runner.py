@@ -267,10 +267,10 @@ def run_configs(data_dir, reviews_filename):
                 # set number of hidden layers and nodes
                 # if 1 layer = [n_inputs / 2]
                 # if 2 layers = [n_inputs / 2, n_inputs / 4]
-                if model_params[tf_model]["hidden_units"] == 1:
-                    model_params[tf_model]["hidden_units"] = [len(train_x[0]) // 2]
-                elif model_params[tf_model]["hidden_units"] == 2:
-                    model_params[tf_model]["hidden_units"] = [len(train_x[0]) // 2, len(train_x[0]) // 4]
+                if model_params[tfmodel]["hidden_units"] == 1:
+                    model_params[tfmodel]["hidden_units"] = [len(train_x[0]) // 2]
+                elif model_params[tfmodel]["hidden_units"] == 2:
+                    model_params[tfmodel]["hidden_units"] = [len(train_x[0]) // 2, len(train_x[0]) // 4]
 
                 model = tf_model.get_model(tf_model_name, model_params[tfmodel])
                 tf_model.train(model, train_x, train_y, model_params[tfmodel])

@@ -1,7 +1,9 @@
 import senticnet5 as sent_dict
 import pandas as pd
 import numpy as np
+from itertools import islice
 from sklearn.model_selection import train_test_split
+import re
 
 
 # returns numpy array
@@ -14,7 +16,7 @@ def get_reviews(reviews_filename):
     reviews = []
     with open(reviews_filename, "r") as f:
         for line in f:
-            reviews.append(line.split())
+            reviews.append([w.lower() for w in re.sub('[^A-Za-z \']+', "", line).split()])
     return reviews
 
 
@@ -29,31 +31,18 @@ def word_polarity(word):
 
 # return average polarity of a given document
 # if none of the words are in dictionary return None
+# accounts all single words and combinations of 2 words
 def document_polarity(doc):
     polarity_sum = 0.0
     num_words_accounted = 0
-    for i, (word1, word2) in enumerate(zip(doc)):
-        current_polarity = None
-        last_polarity = None
-
-        phrase_polarity = word_polarity(word1 + "_" + word2)
-        if phrase_polarity is not None:
-            current_polarity = phrase_polarity
-        else:
-            current_polarity = word_polarity(word1)
-
-            # if last word is not used in a phrase, try to get its polarity
-            if i == len(doc) - 1:
-                last_polarity = word_polarity(word2)
+    phrases = get_phrases(doc, 2)
+    for phrase in phrases:
+        current_polarity = word_polarity(phrase)
 
         if current_polarity is not None:
             polarity_sum += current_polarity
             num_words_accounted += 1
-            
-            # account polarity of the last word
-            if last_polarity is not None:
-                polarity_sum += last_polarity
-                num_words_accounted += 1
+
     if num_words_accounted > 0:
         return polarity_sum / num_words_accounted
     return None
@@ -62,6 +51,7 @@ def document_polarity(doc):
 # calculates polarities for given txt file with documents
 # saves dictionary with average document polarity at given rating and number of rating occurrences
 def train(filename):
+    print("TRAINING SIMPLE SENTIMENT")
     results = {
         0.0: [0.0, 0],          # average polarity at given rating
         1.0: [0.0, 0],
@@ -94,6 +84,7 @@ def train(filename):
 
 # gives rating prediction based on closest average document polarity
 def predictions(filename):
+    print("PREDICTING SIMPLE SENTIMENT")
     predictions = []
     ratings = get_ratings(filename + "_ratings.npy")
     reviews = get_reviews(filename + "_reviews.txt")
@@ -113,3 +104,33 @@ def predictions(filename):
     pd_predictions = pd.Series(predictions, name="Predicted")
     confusion_matrix = pd.crosstab(pd_predictions, pd_ratings)
     return confusion_matrix
+
+
+# generates exhaustible sliding window over a sequence
+# [1, 2, 3, 4], 2 => 12 23, 34, 4
+# [1, 2, 3, 4], 3 => 123, 234, 34, 4
+def get_windows(sequence, n):
+    windows = []
+    for i, x in enumerate(sequence):
+        windows.append(list(islice(sequence, i, i+n)))
+    return windows
+
+
+# returns all combinations retaining the order
+# eg. 1, 2, 3 => 1, 1_2, 1_2_3
+def get_combinations(sequence):
+    combinations = []
+    for i, x in enumerate(sequence):
+        combinations.append("_".join(sequence[:i] + [x]))
+    return combinations
+
+
+# returns all posible combinations with a sliding window
+# eg. window_size = 2
+# 1, 2, 3, 4 => 1, 1_2, 2, 2_3, 3, 3_4,
+def get_phrases(doc, window_size):
+    phrases = []
+    for window in get_windows(doc, window_size):
+        phrases += get_combinations(window)
+    return phrases
+
