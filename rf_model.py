@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+import multiprocessing
 
 
 def train(file_x, file_y, params):
@@ -19,7 +20,7 @@ def train(file_x, file_y, params):
     model = RandomForestClassifier(
         n_estimators=params["n_estimators"],
         max_features=params["max_features"],
-        n_jobs=-1
+        n_jobs=multiprocessing.cpu_count() // 2
     )
 
     model.fit(x_train, y_train)
