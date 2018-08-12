@@ -93,6 +93,7 @@ def run_predictions(model, file_x, file_y):
     pd_ratings = pd.Series(y_test[:len(predictions)], name="Actual")
     pd_predictions = pd.Series(predictions, name="Predicted")
     confusion_matrix = pd.crosstab(pd_predictions, pd_ratings)
+    print(confusion_matrix)
     # rows = predictions
     # columns = actual
     return confusion_matrix

@@ -4,7 +4,10 @@ import rf_model
 import doc_model
 import numpy as np
 import errno
-import pickle
+# import pickle
+from sklearn.externals import joblib
+# clf = joblib.load('filename.pk1')
+
 
 def run_configs(data_dir, reviews_filename):
     doc_dir = data_dir + "doc_models/" + reviews_filename
@@ -64,7 +67,8 @@ def run_configs(data_dir, reviews_filename):
                 #model_params[rfmodel]["n_inputs"] = len(train_x[0])
                 model = rf_model.train(train_x, train_y, model_params[rfmodel])
                 confusion_matrix = rf_model.run_predictions(model, train_x, train_y)
-                pickle.dump(model, open(rf_model_name + "model.sav", "wb"))
+		joblib.dump(model, rf_model_name + "model.sav.compressed", compress=True) 
+                # pickle.dump(model, open(rf_model_name + "model.sav", "wb"))
                 confusion_matrix.to_csv(rf_model_name + "confusion_matrix.csv")
 
 
