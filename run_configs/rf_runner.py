@@ -61,13 +61,13 @@ def run_configs(data_dir, reviews_filename):
             rf_model_name = docmodel.replace(".d2v", "_classifier_" + rfmodel + "/").replace("doc_models", "rf_models")
             create_dir(rf_model_name)
 
-            if not os.path.isfile(rf_model_name + "model.sav"):
+            if not os.path.isfile(rf_model_name + "model.sav.compressed"):
                 if train_x is None:
                     train_x = doc_model.get_model(docmodel).docvecs.doctag_syn0
                 #model_params[rfmodel]["n_inputs"] = len(train_x[0])
                 model = rf_model.train(train_x, train_y, model_params[rfmodel])
                 confusion_matrix = rf_model.run_predictions(model, train_x, train_y)
-		joblib.dump(model, rf_model_name + "model.sav.compressed", compress=True) 
+                joblib.dump(model, rf_model_name + "model.sav.compressed", compress=True)
                 # pickle.dump(model, open(rf_model_name + "model.sav", "wb"))
                 confusion_matrix.to_csv(rf_model_name + "confusion_matrix.csv")
 
