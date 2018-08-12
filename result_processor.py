@@ -7,7 +7,16 @@ def get_metrics(cm_filename):
     # read csv -> transform to numpy matrix and remove first column (indexes/classes)
     # rows = predictions
     # columns = actual
-    cross_matrix = pd.read_csv(cm_filename).as_matrix()[:, 1:]
+    csv = pd.read_csv(cm_filename)
+
+    # combine original matrix with an empty one in case any of the columns are missing
+    empty_df = pd.DataFrame(
+        [[0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0], [2, 0, 0, 0, 0, 0], [3, 0, 0, 0, 0, 0], [4, 0, 0, 0, 0, 0]],
+        columns=["Predicted", "0", "1", "2", "3", "4"]
+    )
+    csv = pd.concat([csv, empty_df], axis=0).groupby("Predicted").sum().reset_index()
+
+    cross_matrix = csv.as_matrix()[:, 1:]
 
     # true positives
     tp = np.diag(cross_matrix)
@@ -25,8 +34,8 @@ def get_metrics(cm_filename):
         tn.append(sum(sum(temp)))
 
     accuracy = (tp + tn) / (tp + tn + fp + fn)
-    precision = tp / (tp + fp)  # or positive predictive value
-    recall = tp / (tp + fn)     # or sensitivity
+    precision = np.nan_to_num(tp / (tp + fp))  # or positive predictive value
+    recall = np.nan_to_num(tp / (tp + fn))     # or sensitivity
 
     metrics = {
         "Accuracy": accuracy,
